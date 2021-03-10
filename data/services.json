@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "icon": "fas fa-globe fa-2x",
+        "title":"Worldwide Shipping",
+        "description" : "Ship within 7 days or less."
+    },
+    {
+        "id": 2,
+        "icon": "fas fa-stamp fa-2x",
+        "title":"Certified by WCSA",
+        "description" : "Offical certification by Watch Certification Service of America."
+    },
+    {
+        "id": 3,
+        "icon": "fas fa-file-invoice-dollar fa-2x",
+        "title":"30 Days Money Back",
+        "description" : "If you're not satisfied with your product you can return it within 30 days!"
+    }
+]
+
+

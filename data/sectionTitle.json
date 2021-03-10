@@ -1,0 +1,12 @@
+[
+    {
+        "id":1,
+        "title": "featured products",
+        "location" : "#featuredTitle"
+    },
+    {
+        "id":2,
+        "title": "best sellers",
+        "location" : "#bestSellerTitle"
+    }
+]

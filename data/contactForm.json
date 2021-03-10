@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "email",
+        "type": "email",
+        "placeholder": "Email"
+    },
+    {
+        "id": 2,
+        "name": "name",
+        "type": "text",
+        "placeholder": "Name"
+    },
+    {
+        "id": 3,
+        "name": "message",
+        "type": "textarea",
+        "placeholder": "Messege"
+    },
+    {
+        "id": 4,
+        "name": "check",
+        "type": "checkbox",
+        "placeholder": "Subscribe to news letter"
+    },
+    {
+        "id": 4,
+        "name": "button",
+        "type": "button",
+        "placeholder": "Submit"
+    }
+]

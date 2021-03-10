@@ -1,0 +1,9 @@
+{
+    "id" :1,
+    "title" :"About Company",
+    "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam natus molestias aliquid fugiat veritatis numquam magnam explicabo rerum illo ipsa tenetur enim, ullam sequi qui!",
+    "img":{
+        "src":"images/image-3.jpg",
+        "alt":"Company"
+    }
+}

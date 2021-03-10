@@ -1,0 +1,32 @@
+[
+    {
+        "id":1,
+        "title": "Best Luxury Watches Retailer",
+        "lead": "We belive in quality",
+        "button":{
+            "href": "products.html",
+            "text": "See Products"
+        }
+    },
+    {
+        "id":2,
+        "title": "We're here to help",
+        "lead": "Our customer service is always there to help you with anything you need",
+        "button":{
+            "href": "contact.html",
+            "text": "Contact US"
+        }
+    },
+    {
+        "id":3,
+        "title": "Keeping the Tradition Alive",
+        "lead": "Learn more about our Company history and values",
+        "button":{
+            "href": "about.html",
+            "text": "Learn More"
+        }
+    }
+]
+
+
+

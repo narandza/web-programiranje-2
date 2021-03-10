@@ -1,0 +1,25 @@
+{
+    "id":1,
+    "companyName": "WatchOut",
+    "description": "We Belive in Good Time",
+    "social": 
+    {
+        "facebook":
+        {
+            "href": "https://www.facebook.com/",
+            "icon": "fab fa-facebook"
+        },
+        "instagram":
+        {
+            "href": "https://www.instagram.com/",
+            "icon": "fab fa-instagram"
+        },
+        "twitter":
+        {
+            "href": "https://www.twitter.com/",
+            "icon": "fab fa-twitter"
+        }
+    },
+    "copyright": "&copy;Copyright WatchOut"
+
+}

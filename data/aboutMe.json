@@ -1,0 +1,27 @@
+{
+    "ime": "Dimitrije",
+    "prezime": "Jovanović",
+    "brojIndeksa": 35,
+    "godinaIndeksa": 19,
+    "datumRodjenja": {
+        "dan": 26,
+        "mesec": 7,
+        "godina": 1999
+    },
+    "mestoRođenja": "Pirot",
+    "školovanje":{
+        "srednjaŠkola": {
+            "naziv":"Gimnazija u Pirot",
+            "završio":true
+        },
+        "fakultet": {
+            "naziv":"Visoka  škola ICT",
+            "završio":false
+        }
+    },
+    "image":{
+        "src": "images/ja.jpg",
+        "alt": "author.jpg"
+    },
+    "kratakOpis" :"Zovem se Dimitrije a prezivam Jovanović, dolazim iz Pirota i trenuto studiram visoku školu ICT u Beogradu"
+}
