@@ -43,6 +43,9 @@ $(document).ready(() => {
   ajax("sort", function (response) {
     displaySort(response);
   });
+  ajax("aboutMe",function(response){
+    displayAuthor(response);
+})
   displayCart();
   const sort = $("#sort");
   sort.on("change", filterDisplay);
@@ -65,12 +68,7 @@ function ajax(item, result) {
 function displayNavLinks(links) {
   var html = "";
   for (let link of links) {
-    if (link.id == 1) {
-      html += `
-                <li class="nav-item active">
-                    <a href="${link.href}" class="nav-link">${link.name}</a>
-                </li>`;
-    } else if (link.name == "Cart") {
+    if (link.name == "Cart") {
       html += `
             <li class="nav-item" >
                 <a href="${
@@ -585,13 +583,13 @@ function displayCart() {
   let cartCost = localStorage.getItem("totalCost");
   cartItems = JSON.parse(cartItems);
   let productContainer = $(".cart-products");
-  if (cartItems && productContainer) {
+  if (cartItems && productContainer && cartItems.length!=0) {
     html = "";
     Object.values(cartItems).map((item) => {
       html += `
             <div class="row cart-cart p-5 my-5">
             <div class="cart-product  float-right">
-                <span class="remove"><i class="far fa-window-close"></i></span>
+                <span class="remove" onclick="removeItem(${item.id})  "><i class="far fa-window-close"></i></span>
                 <img src="${item.image.src}"alt="${
         item.image.alt
       }" class="img-fluid rounded-circle img-cart">
@@ -619,7 +617,7 @@ function displayCart() {
             <h4 class="basketTotal ">
                 $${Intl.NumberFormat("de-DE").format(cartCost)}
             </h4>
-            <button onclick="shopAlert()"class="btn btn-dange">Buy</button>
+            <button onclick="shopAlert()"class="btn btn-danger">Clear Cart</button>
             <button onclick="shopAlert()"class="btn btn-color">Buy</button>
         </div>
         </div>
@@ -630,9 +628,42 @@ function displayCart() {
     $(".cart-container").html(html);
   }
 }
+//remove item
+function removeItem(id){
+  var cartnumber = localStorage.getItem('cartNumbers')
+  cartnumber = JSON.parse(cartnumber)
+  cartnumber--
+  if(cartnumber===0){
+    localStorage.removeItem('cartNumbers')
+  }
+  else{
+    localStorage.setItem('cartNumbers',cartnumber)
+  }
+  var totalCost = localStorage.getItem('totalCost')
+  totalCost = JSON.parse(totalCost)
+  var cart = localStorage.getItem('productsInCart')
+  cart = JSON.parse(cart)
+  cart = Object.values(cart)
+  var product = cart.find(x=>x.id==id)
+  totalCost-=product.price
+  if(totalCost===0){
+    localStorage.removeItem('totalCost')
+  }
+  else{
+    localStorage.setItem('totalCost', totalCost)
+  }
+  cart = cart.filter(x=>x.id!=id)
+  localStorage.setItem('productsInCart',JSON.stringify(cart))
+  location.reload();
+}
 //klik na buy
 function shopAlert() {
   alert("Thank you for your purchase!");
+  localStorage.clear();
+  location.reload();
+}
+//clearCart
+function shopAlert(){
   localStorage.clear();
   location.reload();
 }
@@ -681,4 +712,20 @@ function sort(products) {
 }
 function filterDisplay(){
     ajax('products',displayAllProducts);
+}
+//prikaz autora
+function displayAuthor(author){
+  html = `
+  <div class="row">
+  <div class="col-lg-6">
+      <img class="img-fluid rounded"src="${author.image.src}" alt="${author.image.alt}">
+  </div>
+  <div class="col-6 text-center pt-5">
+      <h1>${author.ime} ${author.prezime}</h1>
+      <h2>${author.index.broj}/${author.index.godina}</h2>
+      <p>${author.kratakOpis}</p>
+  </div>
+</div>
+  `
+  $(".author").html(html)
 }
