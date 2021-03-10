@@ -599,9 +599,7 @@ function displayCart() {
               item.price
             )}</div>
             <div class="quantity pt-5 ml-lg-5">
-            <i class="far fa-caret-square-left"></i>
             <span>${item.inCart}</span>
-            <i class="far fa-caret-square-right"></i>
             </div>
             <div class="total ml-5 pl-2float-right">$${Intl.NumberFormat(
               "de-DE"
