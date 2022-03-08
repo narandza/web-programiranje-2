@@ -1,28 +1,43 @@
 $(document).ready(() => {
-  ajax("navbar", function (respone) {
-    displayNavLinks(respone);
+  //nizovi
+
+  var brandsArray = [];
+  let genderArray = [];
+
+  //AJAX callback
+
+  ajax("navbar", function (response) {
+    displayNavLinks(response);
   });
+
   ajax("carouselLinks", function (response) {
     displayCarouselBars(response);
   });
+
   ajax("carouselItems", function (response) {
     displayCarouselItems(response);
   });
+
   ajax("services", function (response) {
     displayServices(response);
   });
+
   ajax("sectionTitle", function (response) {
     displaySectionTitles(response);
   });
+
   ajax("aboutCompany", function (response) {
     displayAboutCompany(response);
   });
+
   ajax("contactForm", function (response) {
     displayContactForm(response);
   });
+
   ajax("footer", function (response) {
     displayFooter(response);
   });
+
   ajax("products", function (response) {
     const bestsellers = [];
     for (let p of response) {
@@ -34,25 +49,34 @@ $(document).ready(() => {
     displayAllProducts(response);
     search(response);
   });
+
   ajax("brands", function (response) {
     displayBrands(response);
   });
+
   ajax("genders", function (response) {
     displayGender(response);
   });
+
   ajax("sort", function (response) {
     displaySort(response);
   });
+
   ajax("aboutMe",function(response){
     displayAuthor(response);
-})
+  })
+
   displayCart();
-  const sort = $("#sort");
-  sort.on("change", filterDisplay);
+
+ $("#sort").change(filterDisplay)
   const remove = document.querySelectorAll(".remove");
-  console.log(remove);
-});
+
+
+
+
+
 //ajax callback
+
 function ajax(item, result) {
   $.ajax({
     url: "data/" + item + ".json",
@@ -64,7 +88,9 @@ function ajax(item, result) {
     },
   });
 }
+
 //prikaz navbara
+
 function displayNavLinks(links) {
   var html = "";
   for (let link of links) {
@@ -84,7 +110,9 @@ function displayNavLinks(links) {
   }
   $("#navbarLinks").html(html);
 }
+
 //prikaz slider
+
 function displayCarouselBars(bars) {
   let html = "";
   for (let bar of bars) {
@@ -161,7 +189,9 @@ function displayCarouselItems(items) {
   }
   $("#CarouselItems").html(html);
 }
+
 //prikaz services
+
 function displayServices(services) {
   let html = "";
   for (let service of services) {
@@ -181,7 +211,9 @@ function displayServices(services) {
   }
   $("#services").html(html);
 }
+
 //prikaz naslova
+
 function displaySectionTitles(titles) {
   let html = "";
   for (let title of titles) {
@@ -196,7 +228,9 @@ function displaySectionTitles(titles) {
     html = "";
   }
 }
+
 //prikaz izdvojenih proizvoda
+
 function displayFeaturedProducts(products) {
   let html = "";
   for (let product of products) {
@@ -228,7 +262,9 @@ function displayFeaturedProducts(products) {
   }
   $("#product-items").html(html);
 }
+
 //prikaz o kompaniji
+
 function displayAboutCompany(info) {
   let html = `
     <div class="col-lg-5 text-center">
@@ -240,7 +276,9 @@ function displayAboutCompany(info) {
     </div>`;
   $("#aboutCompany").html(html);
 }
+
 //prikaz kontakt forme + obrada
+
 function displayContactForm(inputs) {
   let html = `<h2 class="section-heading text-center">Contact Us</h2>
     <form class="col-lg-6 offset-lg-3" id="contactForm">`;
@@ -285,7 +323,9 @@ function displayContactForm(inputs) {
     </form>
     `;
   $("#contactForm").html(html);
+
   //kontakt form
+
   const email = $("#email");
   const name = $("#name");
   const message = $("#message");
@@ -333,17 +373,25 @@ function displayContactForm(inputs) {
     }
   });
 }
+
+//REGEX
+
 //regEx Email
 function testEmail(email) {
   re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   return re.test(email);
 }
+
 //regEx Name
+
 function testName(name) {
   re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g;
   return re.test(name);
 }
+
+
 //prikaz footer-a
+
 function displayFooter(footer) {
   let html = `
     <div class="text-center py-5">
@@ -367,7 +415,9 @@ function displayFooter(footer) {
  </div>`;
   $("#footer").html(html);
 }
+
 //prikaz best-sellera
+
 function displayBestSellers(products) {
   let html = "";
   for (let i = 0; i < products.length; i++) {
@@ -413,83 +463,80 @@ function displayBestSellers(products) {
   html += `</div>`;
   $("#bestsellers").html(html);
 }
+
 //prikaz brendova + filtriranje
+
 function displayBrands(brands) {
-  let html = `<li class="list-group-item" data-brand="0">
-        <a href="#" class="btn-brand" >Show All</a>
-    </li>   
+  let html = `  
  `;
   for (let brand of brands) {
     html += `
-        <li class="list-group-item" data-brand="${brand.id}" >
-            <a href="#" class="btn-brand" >${brand.name}</a>
+        <li class="list-group-item" >
+            <input type="checkbox" value="${brand.id}" class="btn-brand" name="brands"/> ${brand.name}
+            
         </li>
         `;
   }
   $("#brands").html(html);
-  //FILTRIRANJE PO BRENDU
-  const brandList = $("#brands").children();
-  for (let listItem of brandList) {
-    listItem.addEventListener("click", function () {
-      for(let l of brandList) l.classList.remove('active');
-      (this).classList.add('active');
-      let id = listItem.dataset.brand;
-      console.log(id);
-      ajax("products", function (products) {
-        let porductList = [];
-        if (id == 0) {
-          displayAllProducts(products);
-        } else {
-          for (let product of products) {
-            if (id == product.brand.id) {
-              porductList.push(product);
-            }
-          }
-          displayAllProducts(porductList);
-        }
-      });
-    });
-  }
+  brandsArray = brands;
+  $('#brands').change(filterDisplay);
+
 }
+
+  //FILTRIRANJE PO BRENDU
+
+
+function brandFilter(data){
+
+  let selectedBrands = [];
+  $('.btn-brand:checked').each(function(el){
+    selectedBrands.push(parseInt($(this).val()));
+  });
+  if(selectedBrands.length != 0){
+    return data.filter(x => selectedBrands.includes(x.brand.id))
+  }
+  return data;
+}
+
+
 //prikaz pola
+
 function displayGender(genders) {
-  let html = `<li class="list-group-item" data-gender="0">
-    <a href="# ">Show Both</a>
- </li>`;
+  let html = ``;
   for (let gender of genders) {
     html += `
-        <li class="list-group-item" data-gender="${gender.id}">
-        <a href="#" class="btn-brand" >${gender.name}</a>
+        <li class="list-group-item">
+        <input type="checkbox" value="${gender.id}" class="btn-gender" name="genres"/> ${gender.name}
     </li>
         `;
   }
   $("#gender").html(html);
-  //FILTRIRANJE
-  const genderList = $("#gender").children();
-  for (let gender of genderList) {
-    gender.addEventListener("click", function (e) {
-      for(let g of genderList) g.classList.remove('active');
-      (this).classList.add('active');
-    e.preventDefault()
-      let id = gender.dataset.gender;
-      ajax("products", function (products) {
-        let porductList = [];
-        if (id == 0) {
-          displayAllProducts(products);
-        } else {
-          for (let product of products) {
-            if (id == product.gender.id) {
-              porductList.push(product);
-            }
-          }
-          displayAllProducts(porductList);
-        }
-      });
-    });
-  }
+  genderArray = genders;
+  $('#gender').change(filterDisplay);
 }
+
+  //FILTRIRANJE pola
+
+  function genderFilter(data){
+
+    let selectedGender = [];
+    $('.btn-gender:checked').each(function(el){
+      selectedGender.push(parseInt($(this).val()));
+    });
+    if(selectedGender.length != 0){
+      return data.filter(x => selectedGender.includes(x.gender.id))
+    }
+    return data;
+  }
+
+
+  
+
 //prikaz svih proizvoda
+
 function displayAllProducts(products) {
+  products = brandFilter(products);
+  products = genderFilter(products)
   products = sort(products);
   let html = "";
   for (let product of products) {
@@ -515,7 +562,9 @@ function displayAllProducts(products) {
         </div>
         `;
   }
+
   //DODAVANJE U KORPu
+
   $("#products").html(html);
   const addToCart = document.querySelectorAll(".add-to-cart");
   for (let i = 0; i < addToCart.length; i++) {
@@ -526,7 +575,9 @@ function displayAllProducts(products) {
     });
   }
 }
+
 //cart nav
+
 function onLoadCartNumbers() {
   if (localStorage.getItem("cartNumbers") == null) {
     return 0;
@@ -534,7 +585,9 @@ function onLoadCartNumbers() {
     return localStorage.getItem("cartNumbers");
   }
 }
+
 //broj proizvoda u korpi
+
 function cartNumbers(product) {
   let productNumbers = localStorage.getItem("cartNumbers");
   productNumbers = parseInt(productNumbers);
@@ -547,7 +600,9 @@ function cartNumbers(product) {
   }
   setItems(product);
 }
+
 //dodavanje porizvoda u korpu
+
 function setItems(product) {
   let cartItems = localStorage.getItem("productsInCart");
   cartItems = JSON.parse(cartItems);
@@ -567,7 +622,9 @@ function setItems(product) {
   }
   setItemToLocalStorage("productsInCart", JSON.stringify(cartItems));
 }
+
 //ukupna cena
+
 function totalCost(price) {
   let cartCost = localStorage.getItem("totalCost");
   if (cartCost != null) {
@@ -577,7 +634,9 @@ function totalCost(price) {
     setItemToLocalStorage("totalCost", price);
   }
 }
+
 //prikaz korpe
+
 function displayCart() {
   let cartItems = localStorage.getItem("productsInCart");
   let cartCost = localStorage.getItem("totalCost");
@@ -626,7 +685,9 @@ function displayCart() {
     $(".cart-container").html(html);
   }
 }
+
 //remove item
+
 function removeItem(id){
   var cartnumber = localStorage.getItem('cartNumbers')
   cartnumber = JSON.parse(cartnumber)
@@ -654,22 +715,30 @@ function removeItem(id){
   localStorage.setItem('productsInCart',JSON.stringify(cart))
   location.reload();
 }
+
 //klik na buy
+
 function shopAlert() {
   alert("Thank you for your purchase!");
   localStorage.clear();
   location.reload();
 }
+
 //clearCart
+
 function shopAlert(){
   localStorage.clear();
   location.reload();
 }
+
 //local-storage
+
 function setItemToLocalStorage(key, value) {
   localStorage.setItem(key, value); 
 }
+
 //search function
+
 function search(products) {
   const search = $("#search");
   search.on("keyup", (e) => {
@@ -684,7 +753,9 @@ function search(products) {
     displayAllProducts(filtered);
   });
 }
+
 // sortiranje
+
 function displaySort(items) {
   let html = ` <option value="0" selected>Select</option>`;
   for (let item of items) {
@@ -695,7 +766,7 @@ function displaySort(items) {
   $("#sort").html(html);
 }
 function sort(products) {
-  const sortType = document.getElementById("sort").value;
+  const sortType = $("#sort").val();
   if (sortType == 1) {
     return products.sort((a, b) => (a.price > b.price ? 1 : -1));
   } else if (sortType == 2) {
@@ -711,7 +782,9 @@ function sort(products) {
 function filterDisplay(){
     ajax('products',displayAllProducts);
 }
+
 //prikaz autora
+
 function displayAuthor(author){
   html = `
   <div class="row">
@@ -720,10 +793,16 @@ function displayAuthor(author){
   </div>
   <div class="col-6 text-center pt-5">
       <h1>${author.ime} ${author.prezime}</h1>
-      <h2>${author.index.broj}/${author.index.godina}</h2>
+      <h2>${author.brojIndeksa}/${author.godinaIndeksa}</h2>
       <p>${author.kratakOpis}</p>
   </div>
 </div>
   `
   $(".author").html(html)
 }
+
+
+
+});
+
+
